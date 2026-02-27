@@ -23,6 +23,19 @@ scrape_configs:
       - target_label: instance
         replacement: delft
 
+  - job_name: 'thingpark'
+    scrape_interval: 5m
+    metrics_path: /probe
+    params:
+      module: [thingpark]
+      target:
+        - "https://thingparkenterprise.eu.actility.com/thingpark/dx/core/latest/api/connections/246430/metrics"
+    static_configs:
+      - targets: ['json_exporter:7979']
+    relabel_configs:
+      - target_label: instance
+        replacement: thingpark-246430
+
   - job_name: 'json_exporter'
     static_configs:
       - targets: ['json_exporter:7979']

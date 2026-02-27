@@ -18,13 +18,14 @@ services:
       - monitoring
 
   json_exporter:
-    image: prometheuscommunity/json-exporter:latest
+    build: ./json_exporter
     container_name: json_exporter
     restart: unless-stopped
+    environment:
+      - THINGPARK_CLIENT_ID=${THINGPARK_CLIENT_ID}
+      - THINGPARK_CLIENT_SECRET=${THINGPARK_CLIENT_SECRET}
     volumes:
-      - ./json_exporter/config.yml:/config.yml:ro
-    command:
-      - '--config.file=/config.yml'
+      - ./json_exporter/config.yml.template:/config.yml.template:ro
     ports:
       - "7979:7979"
     networks:

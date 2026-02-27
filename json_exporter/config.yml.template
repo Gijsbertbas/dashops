@@ -2,8 +2,8 @@ modules:
   thingpark:
     http_client_config:
       oauth2:
-        client_id: YOUR_CLIENT_ID
-        client_secret: YOUR_CLIENT_SECRET
+        client_id: ${THINGPARK_CLIENT_ID}
+        client_secret: ${THINGPARK_CLIENT_SECRET}
         token_url: https://thingparkenterprise.eu.actility.com/thingpark/dx/admin/latest/api/oauth/token
     metrics:
       - name: thingpark_active_things
