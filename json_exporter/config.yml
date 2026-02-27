@@ -2,49 +2,49 @@ modules:
   weather:
     metrics:
       - name: weather_temperature_celsius
-        type: gauge
+        valuetype: gauge
         help: "Current air temperature at 2m height in Celsius"
         path: "{ .current.temperature_2m }"
         labels:
           location: delft
 
       - name: weather_apparent_temperature_celsius
-        type: gauge
+        valuetype: gauge
         help: "Apparent (feels like) temperature in Celsius"
         path: "{ .current.apparent_temperature }"
         labels:
           location: delft
 
       - name: weather_relative_humidity_percent
-        type: gauge
+        valuetype: gauge
         help: "Relative humidity at 2m height (%)"
         path: "{ .current.relative_humidity_2m }"
         labels:
           location: delft
 
       - name: weather_precipitation_mm
-        type: gauge
+        valuetype: gauge
         help: "Current precipitation in mm"
         path: "{ .current.precipitation }"
         labels:
           location: delft
 
       - name: weather_wind_speed_kmh
-        type: gauge
+        valuetype: gauge
         help: "Wind speed at 10m height in km/h"
         path: "{ .current.wind_speed_10m }"
         labels:
           location: delft
 
       - name: weather_wind_direction_degrees
-        type: gauge
+        valuetype: gauge
         help: "Wind direction at 10m height in degrees"
         path: "{ .current.wind_direction_10m }"
         labels:
           location: delft
 
       - name: weather_code
-        type: gauge
+        valuetype: gauge
         help: "WMO weather interpretation code (0=clear, 61=rain, 71=snow, etc.)"
         path: "{ .current.weather_code }"
         labels:
