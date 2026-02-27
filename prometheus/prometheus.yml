@@ -1,0 +1,32 @@
+global:
+  scrape_interval: 10m      # Weather data doesn't change faster than this
+  evaluation_interval: 1m
+
+scrape_configs:
+
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['localhost:9090']
+
+  - job_name: 'weather_delft'
+    metrics_path: /probe
+    params:
+      # Open-Meteo: free, no API key, WMO standard
+      # Delft coords: 52.0116° N, 4.3571° E
+      # hourly=temperature_2m gives current hour's temp
+      module: [weather]
+      target:
+        - "https://api.open-meteo.com/v1/forecast?latitude=52.0116&longitude=4.3571&current=temperature_2m,relative_humidity_2m,apparent_temperature,precipitation,wind_speed_10m,wind_direction_10m,weather_code&hourly=temperature_2m&forecast_days=1&timezone=Europe/Amsterdam"
+    static_configs:
+      - targets: ['json_exporter:7979']
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+        regex: (.+)
+        replacement: $1
+      - target_label: instance
+        replacement: delft
+
+  - job_name: 'json_exporter'
+    static_configs:
+      - targets: ['json_exporter:7979']
