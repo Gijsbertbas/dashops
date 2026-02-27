@@ -4,19 +4,19 @@ modules:
       oauth2:
         client_id: ${THINGPARK_CLIENT_ID}
         client_secret: ${THINGPARK_CLIENT_SECRET}
-        token_url: https://thingparkenterprise.eu.actility.com/thingpark/dx/admin/latest/api/oauth/token
+        token_url: https://thingparkenterprise.eu.actility.com/users-auth/protocol/openid-connect/token
     metrics:
       - name: thingpark_active_things
         path: "{ .activeThingsLast1h }"
         valuetype: gauge
-        help: "Active things (last 1h)"
+        help: "Active things in time window"
         labels:
           window: 1h
 
       - name: thingpark_active_things
         path: "{ .activeThingsLast24h }"
         valuetype: gauge
-        help: "Active things (last 24h)"
+        help: "Active things in time window"
         labels:
           window: 24h
 
