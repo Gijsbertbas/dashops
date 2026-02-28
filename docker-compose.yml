@@ -6,7 +6,7 @@ services:
     restart: unless-stopped
     volumes:
       - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
-      - prometheus_data:/prometheus
+      - ${DATA_PATH:-/mnt/usb/dashops}/prometheus:/prometheus
     command:
       - '--config.file=/etc/prometheus/prometheus.yml'
       - '--storage.tsdb.path=/prometheus'
@@ -31,6 +31,19 @@ services:
     networks:
       - monitoring
 
+  backup:
+    image: alpine
+    container_name: backup
+    volumes:
+      - prometheus_data:/prometheus
+      - grafana_data:/grafana
+      - /mnt/usb:/backup
+    command: sh
+    networks:
+      - monitoring
+#    stdin_open: true
+#    tty: true
+
   grafana:
     image: grafana/grafana:latest
     container_name: grafana
@@ -40,7 +53,7 @@ services:
       - GF_SECURITY_ADMIN_PASSWORD=admin
       - GF_USERS_ALLOW_SIGN_UP=false
     volumes:
-      - grafana_data:/var/lib/grafana
+      - ${DATA_PATH:-/mnt/usb/dashops}/grafana:/var/lib/grafana
       - ./grafana/provisioning:/etc/grafana/provisioning:ro
     ports:
       - "3000:3000"
@@ -48,10 +61,6 @@ services:
       - prometheus
     networks:
       - monitoring
-
-volumes:
-  prometheus_data:
-  grafana_data:
 
 networks:
   monitoring:
