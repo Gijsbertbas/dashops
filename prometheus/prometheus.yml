@@ -1,5 +1,5 @@
 global:
-  scrape_interval: 10m      # Weather data doesn't change faster than this
+  scrape_interval: 60m
   evaluation_interval: 1m
 
 scrape_configs:
@@ -9,6 +9,7 @@ scrape_configs:
       - targets: ['localhost:9090']
 
   - job_name: 'weather_delft'
+    scrape_interval: 15m
     metrics_path: /probe
     params:
       # Open-Meteo: free, no API key, WMO standard
@@ -24,8 +25,7 @@ scrape_configs:
         replacement: delft
 
   - job_name: 'thingpark'
-    scrape_interval: 60m
-    metrics_path: /probe
+    metrics_path: /things
     params:
       module: [thingpark]
       target:
@@ -39,3 +39,10 @@ scrape_configs:
   - job_name: 'json_exporter'
     static_configs:
       - targets: ['json_exporter:7979']
+
+  - job_name: 'aws'
+    metrics_path: /aws
+    scheme: https
+    static_configs:
+      - targets:
+        - "https://go2go5ookmnrvtms4x4pywdnqi0yytbq.lambda-url.eu-west-1.on.aws/"
