@@ -41,8 +41,8 @@ scrape_configs:
       - targets: ['json_exporter:7979']
 
   - job_name: 'aws'
-    metrics_path: /aws
+    metrics_path: /test/cognito
     scheme: https
     static_configs:
       - targets:
-        - "b4s117ffm5.execute-api.eu-west-1.amazonaws.com/test/cognito"
+        - "b4s117ffm5.execute-api.eu-west-1.amazonaws.com"

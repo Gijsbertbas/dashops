@@ -31,19 +31,6 @@ services:
     networks:
       - monitoring
 
-  backup:
-    image: alpine
-    container_name: backup
-    volumes:
-      - prometheus_data:/prometheus
-      - grafana_data:/grafana
-      - /mnt/usb:/backup
-    command: sh
-    networks:
-      - monitoring
-#    stdin_open: true
-#    tty: true
-
   grafana:
     image: grafana/grafana:latest
     container_name: grafana
