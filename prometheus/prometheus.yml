@@ -10,7 +10,7 @@ scrape_configs:
 
   - job_name: 'weather_delft'
     scrape_interval: 15m
-    metrics_path: /probe
+    metrics_path: /temp
     params:
       # Open-Meteo: free, no API key, WMO standard
       # Delft coords: 52.0116° N, 4.3571° E
@@ -25,7 +25,7 @@ scrape_configs:
         replacement: delft
 
   - job_name: 'thingpark'
-    metrics_path: /things
+    metrics_path: /probe
     params:
       module: [thingpark]
       target:
@@ -45,4 +45,4 @@ scrape_configs:
     scheme: https
     static_configs:
       - targets:
-        - "https://go2go5ookmnrvtms4x4pywdnqi0yytbq.lambda-url.eu-west-1.on.aws/"
+        - "b4s117ffm5.execute-api.eu-west-1.amazonaws.com/test/cognito"
