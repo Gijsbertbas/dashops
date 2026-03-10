@@ -17,17 +17,30 @@ services:
     networks:
       - monitoring
 
+  milesight-token-fetcher:
+    build: ./milesight-token-fetcher
+    container_name: milesight-token-fetcher
+    restart: unless-stopped
+    environment:
+      - MILESIGHT_CLIENT_ID=${MILESIGHT_CLIENT_ID}
+      - MILESIGHT_CLIENT_SECRET=${MILESIGHT_CLIENT_SECRET}
+    volumes:
+      - milesight-token:/token
+    networks:
+      - monitoring
+
   json_exporter:
     build: ./json_exporter
     container_name: json_exporter
     restart: unless-stopped
+    depends_on:
+      - milesight-token-fetcher
     environment:
       - THINGPARK_CLIENT_ID=${THINGPARK_CLIENT_ID}
       - THINGPARK_CLIENT_SECRET=${THINGPARK_CLIENT_SECRET}
-      - MILESIGHT_CLIENT_ID=${MILESIGHT_CLIENT_ID}
-      - MILESIGHT_CLIENT_SECRET=${MILESIGHT_CLIENT_SECRET}
     volumes:
       - ./json_exporter/config.yml.template:/config.yml.template:ro
+      - milesight-token:/token:ro
     ports:
       - "7979:7979"
     networks:
@@ -54,3 +67,6 @@ services:
 networks:
   monitoring:
     driver: bridge
+
+volumes:
+  milesight-token:

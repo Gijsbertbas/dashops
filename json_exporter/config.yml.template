@@ -86,10 +86,7 @@ modules:
 
   milesight:
     http_client_config:
-      oauth2:
-        client_id: ${MILESIGHT_CLIENT_ID}
-        client_secret: ${MILESIGHT_CLIENT_SECRET}
-        token_url: https://eu-openapi.milesight.com/oauth/token
+      bearer_token_file: /token/milesight_token
     headers:
       Content-Type: application/json
       Accept: application/json
