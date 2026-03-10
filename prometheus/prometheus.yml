@@ -36,6 +36,18 @@ scrape_configs:
       - target_label: instance
         replacement: thingpark-246430
 
+  - job_name: 'milesight'
+    metrics_path: /probe
+    params:
+      module: [milesight]
+      target:
+        - "https://eu-openapi.milesight.com/device/openapi/v1/devices/search"
+    static_configs:
+      - targets: ['json_exporter:7979']
+    relabel_configs:
+      - target_label: instance
+        replacement: milesight
+
   - job_name: 'json_exporter'
     static_configs:
       - targets: ['json_exporter:7979']

@@ -24,6 +24,8 @@ services:
     environment:
       - THINGPARK_CLIENT_ID=${THINGPARK_CLIENT_ID}
       - THINGPARK_CLIENT_SECRET=${THINGPARK_CLIENT_SECRET}
+      - MILESIGHT_CLIENT_ID=${MILESIGHT_CLIENT_ID}
+      - MILESIGHT_CLIENT_SECRET=${MILESIGHT_CLIENT_SECRET}
     volumes:
       - ./json_exporter/config.yml.template:/config.yml.template:ro
     ports:

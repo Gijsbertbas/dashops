@@ -84,6 +84,28 @@ modules:
           window: 24h
           status: failed
 
+  milesight:
+    http_client_config:
+      oauth2:
+        client_id: ${MILESIGHT_CLIENT_ID}
+        client_secret: ${MILESIGHT_CLIENT_SECRET}
+        token_url: https://eu-openapi.milesight.com/oauth/token
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    body:
+      content: '{"pageSize": 100, "pageNumber": 1}'
+    metrics:
+      - name: milesight_device
+        type: object
+        path: "{ .data.content[*] }"
+        help: "Milesight base station metrics"
+        labels:
+          description: "{ .description }"
+        values:
+          battery_percent: "{ .electricity }"
+          last_update_time_ms: "{ .lastUpdateTime }"
+
   weather:
     metrics:
       - name: weather_temperature_celsius
